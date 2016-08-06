@@ -4,14 +4,6 @@
 
 Based on [my rspec_nested_transactions pull request comment](https://github.com/rosenfeld/rspec_nested_transactions/pull/1#issuecomment-238022973), I've prepared this repository to explain the step by step of making ActiveRecord work with the `rspec_nested_transactions` gem.
 
-## Setup
-
-This project is a sample Rails 5 project which uses:
-
-- FactoryGirl
-- RSpec
-- rspec_nested_transactions
-
 ## Approach
 
 Instead of using RSpec transactional fixtures (which creates SAVEPOINTS but never use them) or database cleaner (which, well, execute too many commits/rollbacks around each RSpec example), Rodrigo Rosenfeld Rosas (https://github.com/rosenfeld) introduced an interesting idea on using nested transactions to isolate test records.
@@ -38,6 +30,22 @@ ActiveRecord::Base.transaction(requires_new: true) do
   raise ActiveRecord::Rollback
 end
 ```
+
+To use it with the `rspec_nested_transactions` just insert the following snippet under any file that you would require on your test suite:
+
+ ```ruby
+ RSpec.configure do |c|
+   (run[]; next) unless example_or_group.metadata[:db]
+
+   c.nested_transaction do |example_or_group, run|
+     ActiveRecord::Base.transaction(requires_new: true) do
+       run[]
+       raise ActiveRecord::Rollback
+     end
+   end
+ end
+
+ ```
 
 ## Expected Results
 
