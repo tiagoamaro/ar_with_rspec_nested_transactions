@@ -35,6 +35,7 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-rails', '~> 3.5.1'
   gem 'rspec_nested_transactions', '~> 0.1.1'
+  gem 'factory_girl_rails', '~> 4.0'
 end
 
 group :development do
