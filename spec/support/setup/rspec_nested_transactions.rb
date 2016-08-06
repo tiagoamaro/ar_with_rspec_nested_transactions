@@ -9,13 +9,9 @@ RSpec.configure do |c|
 
     # Much of this happens in ActiveRecord::ConnectionAdapters::TransactionManager, which is accessible through ActiveRecord::Base.connection.transaction_manager
 
-    begin
-      ActiveRecord::Base.transaction(requires_new: true) do
-        run[]
-        raise StandardError, 'Rollback SAVEPOINT'
-      end
-    rescue StandardError
-      # NOOP
+    ActiveRecord::Base.transaction(requires_new: true) do
+      run[]
+      raise ActiveRecord::Rollback
     end
   end
 end
