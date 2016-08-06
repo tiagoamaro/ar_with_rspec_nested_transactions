@@ -1,4 +1,6 @@
-# README
+# ActiveRecord + Postgres + rspec_nested_transactions
+
+[![Build Status](https://travis-ci.org/tiagoamaro/ar_with_rspec_nested_transactions.svg?branch=master)](https://travis-ci.org/tiagoamaro/ar_with_rspec_nested_transactions)
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
